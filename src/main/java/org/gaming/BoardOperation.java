@@ -24,6 +24,12 @@ public class BoardOperation {
                 } else {
                     board[i][j].setBackground(Color.DARK_GRAY);
                 }
+                int finalI = i;
+                int finalJ = j;
+                board[i][j].addActionListener(listener -> {
+                    System.out.println("Button at (" + finalI + ", " + finalJ + ") clicked.");
+                    System.out.println(board[finalI][finalJ].getText());
+                });
                 jFrame.add(board[i][j]);
             }
         }
