@@ -8,9 +8,8 @@ public class Main {
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setLayout(null);
         jFrame.setSize(800, 800);
-        JButton [][] board = new JButton[8][8];
-        BoardOperation.setUpBoard(board, jFrame);
-        BoardOperation.addPieces(board);
+        BoardOperation.setUpBoard(jFrame);
+        BoardOperation.addPieces();
         jFrame.setVisible(true);
     }
 }
