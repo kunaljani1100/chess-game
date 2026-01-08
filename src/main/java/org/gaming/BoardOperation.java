@@ -5,6 +5,11 @@ import java.awt.*;
 
 public class BoardOperation {
 
+    /**
+     * Function to set up the squares of the chess board.
+     * @param board The board where the squares are to be set up.
+     * @param jFrame The JFrame to which the squares are added.
+     */
     public static void setUpBoard(JButton [][] board, JFrame jFrame) {
         for (int i = 0; i < Constants.ROWS; i++) {
             for (int j = 0; j < Constants.COLS; j++) {
@@ -24,6 +29,10 @@ public class BoardOperation {
         }
     }
 
+    /**
+     * Function to add chess pieces to the board.
+     * @param board The board where the pieces are to be added.
+     */
     public static void addPieces(JButton [][] board) {
         board[0][0].setText("\u265C");
         board[0][0].setFont(Constants.PIECE_FONT);
