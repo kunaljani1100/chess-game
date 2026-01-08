@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class BoardOperation {
 
+    private static boolean pieceClicked = false;
+
     /**
      * Function to set up the squares of the chess board.
      * @param board The board where the squares are to be set up.
@@ -26,11 +28,26 @@ public class BoardOperation {
                 }
                 int finalI = i;
                 int finalJ = j;
-                board[i][j].addActionListener(listener -> {
-                    System.out.println("Button at (" + finalI + ", " + finalJ + ") clicked.");
-                    System.out.println(board[finalI][finalJ].getText());
-                });
+                board[i][j].addActionListener(listener -> resetBoardColors(board[finalI][finalJ], finalI, finalJ));
                 jFrame.add(board[i][j]);
+            }
+        }
+    }
+
+    private static void resetBoardColors(JButton square, int i, int j) {
+        if (!pieceClicked) {
+            if (!square.getText().isEmpty()) {
+                square.setBackground(Color.YELLOW);
+                pieceClicked = !pieceClicked;
+            }
+        } else {
+            if (square.getBackground().equals(Color.YELLOW)) {
+                if ((i + j) % 2 == 0) {
+                   square.setBackground(Color.LIGHT_GRAY);
+                } else {
+                    square.setBackground(Color.DARK_GRAY);
+                }
+                pieceClicked = !pieceClicked;
             }
         }
     }
