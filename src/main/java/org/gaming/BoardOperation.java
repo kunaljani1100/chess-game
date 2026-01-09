@@ -1,7 +1,5 @@
 package org.gaming;
 
-import org.gaming.Constants;
-
 import javax.swing.*;
 import java.awt.*;
 
