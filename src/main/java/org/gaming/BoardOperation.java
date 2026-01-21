@@ -2,6 +2,8 @@ package org.gaming;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class BoardOperation {
 
@@ -9,6 +11,14 @@ public class BoardOperation {
     private static String selectedPiece = Constants.EMPTY_STRING;
     private static JButton [][] board = new JButton[Constants.ROWS][Constants.COLS];
     private static boolean isWhiteTurn = true;
+    private static List<String> captureableBlackPieces = Arrays.asList(
+            Constants.BLACK_PAWN, Constants.BLACK_ROOK, Constants.BLACK_KNIGHT,
+            Constants.BLACK_BISHOP, Constants.BLACK_QUEEN
+    );
+    private static List<String> captureableWhitePieces = Arrays.asList(
+            Constants.WHITE_PAWN, Constants.WHITE_ROOK, Constants.WHITE_KNIGHT,
+            Constants.WHITE_BISHOP, Constants.WHITE_QUEEN
+    );
 
     /**
      * Function to set up the squares of the chess board.
@@ -125,6 +135,11 @@ public class BoardOperation {
                 isWhiteTurn = false;
                 return true;
             }
+            if (newX == oldX - 1 && Math.abs(newY - oldY) == 1 && captureableBlackPieces.contains(board[newX][newY].getText())) {
+                // Capture move
+                isWhiteTurn = false;
+                return true;
+            }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_PAWN)) {
             if (newX == oldX + 2 && newY == oldY && oldX == 1) {
                 if (isPathClear(oldX, oldY, newX, newY)) {
@@ -134,6 +149,11 @@ public class BoardOperation {
             }
             if (newX == oldX + 1 && newY == oldY) {
                 // Single square move doesn't need path check, but check destination
+                isWhiteTurn = true;
+                return true;
+            }
+            if (newX == oldX + 1 && Math.abs(newY - oldY) == 1 && captureableWhitePieces.contains(board[newX][newY].getText())) {
+                // Capture move
                 isWhiteTurn = true;
                 return true;
             }
