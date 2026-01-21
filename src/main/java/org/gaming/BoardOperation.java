@@ -80,6 +80,17 @@ public class BoardOperation {
     }
 
     public static boolean isLegalMove(String piece, int newX, int newY, int oldX, int oldY) {
+        if (piece.equals(Constants.WHITE_PAWN)) {
+            if (newX == oldX - 2 && newY == oldY && oldX == 6) {
+                return true;
+            }
+            return newX == oldX - 1 && newY == oldY;
+        } else if (piece.equals(Constants.BLACK_PAWN)) {
+            if (newX == oldX + 2 && newY == oldY && oldX == 1) {
+                return true;
+            }
+            return newX == oldX + 1 && newY == oldY;
+        }
         return true;
     }
 
