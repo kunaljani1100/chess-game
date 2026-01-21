@@ -53,27 +53,34 @@ public class BoardOperation {
                 pieceClicked = !pieceClicked;
             } else {
                 if (pieceClicked) {
-                    square.setText(selectedPiece);
-                    square.setFont(Constants.PIECE_FONT);
-                    square.setHorizontalAlignment(SwingConstants.CENTER);
-                    square.setVerticalAlignment(SwingConstants.CENTER);
-                    pieceClicked = !pieceClicked;
-                    selectedPiece = Constants.EMPTY_STRING;
                     for (int x = 0; x < Constants.ROWS; x++) {
                         for (int y = 0; y < Constants.COLS; y++) {
                             if (board[x][y].getBackground().equals(Color.YELLOW)) {
-                                if ((x + y) % 2 == 0) {
-                                    board[x][y].setBackground(Color.LIGHT_GRAY);
-                                } else {
-                                    board[x][y].setBackground(Color.DARK_GRAY);
+                                if (isLegalMove(selectedPiece, i, j, x, y)) {
+                                    // Move is legal, implement move logic here
+                                    if ((x + y) % 2 == 0) {
+                                        board[x][y].setBackground(Color.LIGHT_GRAY);
+                                    } else {
+                                        board[x][y].setBackground(Color.DARK_GRAY);
+                                    }
+                                    square.setText(selectedPiece);
+                                    square.setFont(Constants.PIECE_FONT);
+                                    square.setHorizontalAlignment(SwingConstants.CENTER);
+                                    square.setVerticalAlignment(SwingConstants.CENTER);
+                                    pieceClicked = !pieceClicked;
+                                    selectedPiece = Constants.EMPTY_STRING;
+                                    board[x][y].setText(Constants.EMPTY_STRING);
                                 }
-                                board[x][y].setText(Constants.EMPTY_STRING);
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    public static boolean isLegalMove(String piece, int newX, int newY, int oldX, int oldY) {
+        return true;
     }
 
     /**
