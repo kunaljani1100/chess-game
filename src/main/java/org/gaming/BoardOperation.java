@@ -74,6 +74,52 @@ public class BoardOperation {
                                     } else {
                                         board[x][y].setBackground(Color.DARK_GRAY);
                                     }
+                                    
+                                    // Check if this is a castling move
+                                    // Castling: king moves 2 squares horizontally on the same rank
+                                    if ((selectedPiece.equals(Constants.WHITE_KING) || selectedPiece.equals(Constants.BLACK_KING))
+                                            && x == i && Math.abs(j - y) == 2) {
+                                        // Determine castling side and move rook
+                                        if (selectedPiece.equals(Constants.WHITE_KING)) {
+                                            if (j == 6) {
+                                                // White kingside castling: rook at (x, 7) moves to (x, 5)
+                                                String rookPiece = board[x][7].getText();
+                                                board[x][7].setText(Constants.EMPTY_STRING);
+                                                board[x][5].setText(rookPiece);
+                                                board[x][5].setFont(Constants.PIECE_FONT);
+                                                board[x][5].setHorizontalAlignment(SwingConstants.CENTER);
+                                                board[x][5].setVerticalAlignment(SwingConstants.CENTER);
+                                            } else if (j == 2) {
+                                                // White queenside castling: rook at (x, 0) moves to (x, 3)
+                                                String rookPiece = board[x][0].getText();
+                                                board[x][0].setText(Constants.EMPTY_STRING);
+                                                board[x][3].setText(rookPiece);
+                                                board[x][3].setFont(Constants.PIECE_FONT);
+                                                board[x][3].setHorizontalAlignment(SwingConstants.CENTER);
+                                                board[x][3].setVerticalAlignment(SwingConstants.CENTER);
+                                            }
+                                        } else {
+                                            // Black king
+                                            if (j == 6) {
+                                                // Black kingside castling: rook at (x, 7) moves to (x, 5)
+                                                String rookPiece = board[x][7].getText();
+                                                board[x][7].setText(Constants.EMPTY_STRING);
+                                                board[x][5].setText(rookPiece);
+                                                board[x][5].setFont(Constants.PIECE_FONT);
+                                                board[x][5].setHorizontalAlignment(SwingConstants.CENTER);
+                                                board[x][5].setVerticalAlignment(SwingConstants.CENTER);
+                                            } else if (j == 2) {
+                                                // Black queenside castling: rook at (x, 0) moves to (x, 3)
+                                                String rookPiece = board[x][0].getText();
+                                                board[x][0].setText(Constants.EMPTY_STRING);
+                                                board[x][3].setText(rookPiece);
+                                                board[x][3].setFont(Constants.PIECE_FONT);
+                                                board[x][3].setHorizontalAlignment(SwingConstants.CENTER);
+                                                board[x][3].setVerticalAlignment(SwingConstants.CENTER);
+                                            }
+                                        }
+                                    }
+                                    
                                     square.setText(selectedPiece);
                                     square.setFont(Constants.PIECE_FONT);
                                     square.setHorizontalAlignment(SwingConstants.CENTER);
@@ -218,6 +264,160 @@ public class BoardOperation {
     }
 
     /**
+     * Checks if castling is a valid move.
+     * @param isWhite true for white, false for black
+     * @param oldX King's starting row
+     * @param oldY King's starting column
+     * @param newX King's destination row
+     * @param newY King's destination column
+     * @return true if castling is valid, false otherwise
+     */
+    private static boolean isValidCastling(boolean isWhite, int oldX, int oldY, int newX, int newY) {
+        // Castling must be on the same rank (row)
+        if (oldX != newX) {
+            return false;
+        }
+        
+        // King must move exactly 2 squares horizontally
+        if (Math.abs(newY - oldY) != 2) {
+            return false;
+        }
+        
+        // Destination square must be empty
+        if (!board[newX][newY].getText().isEmpty()) {
+            return false;
+        }
+        
+        // White castling
+        if (isWhite) {
+            // King must be at starting position (7, 4)
+            if (oldX != 7 || oldY != 4) {
+                return false;
+            }
+            
+            // King must not be in check
+            if (isSquareUnderAttack(oldX, oldY, true)) {
+                return false;
+            }
+            
+            // Determine kingside or queenside
+            if (newY == 6) {
+                // Kingside castling: rook should be at (7, 7)
+                String rook = board[7][7].getText();
+                if (!rook.equals(Constants.WHITE_ROOK)) {
+                    return false;
+                }
+                
+                // Check if squares between king and rook are empty (7,5) and (7,6)
+                if (!board[7][5].getText().isEmpty() || !board[7][6].getText().isEmpty()) {
+                    return false;
+                }
+                
+                // King cannot pass through check (square 7,5)
+                if (isSquareUnderAttack(7, 5, true)) {
+                    return false;
+                }
+                
+                // King cannot end in check (square 7,6)
+                if (isSquareUnderAttack(7, 6, true)) {
+                    return false;
+                }
+                
+                return true;
+            } else if (newY == 2) {
+                // Queenside castling: rook should be at (7, 0)
+                String rook = board[7][0].getText();
+                if (!rook.equals(Constants.WHITE_ROOK)) {
+                    return false;
+                }
+                
+                // Check if squares between king and rook are empty (7,1), (7,2), (7,3)
+                if (!board[7][1].getText().isEmpty() || 
+                    !board[7][2].getText().isEmpty() || 
+                    !board[7][3].getText().isEmpty()) {
+                    return false;
+                }
+                
+                // King cannot pass through check (square 7,3)
+                if (isSquareUnderAttack(7, 3, true)) {
+                    return false;
+                }
+                
+                // King cannot end in check (square 7,2)
+                if (isSquareUnderAttack(7, 2, true)) {
+                    return false;
+                }
+                
+                return true;
+            }
+        } else {
+            // Black castling
+            // King must be at starting position (0, 4)
+            if (oldX != 0 || oldY != 4) {
+                return false;
+            }
+            
+            // King must not be in check
+            if (isSquareUnderAttack(oldX, oldY, false)) {
+                return false;
+            }
+            
+            // Determine kingside or queenside
+            if (newY == 6) {
+                // Kingside castling: rook should be at (0, 7)
+                String rook = board[0][7].getText();
+                if (!rook.equals(Constants.BLACK_ROOK)) {
+                    return false;
+                }
+                
+                // Check if squares between king and rook are empty (0,5) and (0,6)
+                if (!board[0][5].getText().isEmpty() || !board[0][6].getText().isEmpty()) {
+                    return false;
+                }
+                
+                // King cannot pass through check (square 0,5)
+                if (isSquareUnderAttack(0, 5, false)) {
+                    return false;
+                }
+                
+                // King cannot end in check (square 0,6)
+                if (isSquareUnderAttack(0, 6, false)) {
+                    return false;
+                }
+                
+                return true;
+            } else if (newY == 2) {
+                // Queenside castling: rook should be at (0, 0)
+                String rook = board[0][0].getText();
+                if (!rook.equals(Constants.BLACK_ROOK)) {
+                    return false;
+                }
+                
+                // Check if squares between king and rook are empty (0,1), (0,2), (0,3)
+                if (!board[0][1].getText().isEmpty() || 
+                    !board[0][2].getText().isEmpty() || 
+                    !board[0][3].getText().isEmpty()) {
+                    return false;
+                }
+                
+                // King cannot pass through check (square 0,3)
+                if (isSquareUnderAttack(0, 3, false)) {
+                    return false;
+                }
+                
+                // King cannot end in check (square 0,2)
+                if (isSquareUnderAttack(0, 2, false)) {
+                    return false;
+                }
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
      * Checks if the path between two squares is clear (no pieces blocking the path).
      * This prevents pieces from jumping over other pieces.
      * @param oldX Starting row position
@@ -341,6 +541,14 @@ public class BoardOperation {
                 }
             }
         } else if (isWhiteTurn && piece.equals(Constants.WHITE_KING) && !captureableWhitePieces.contains(board[newX][newY].getText())) {
+            // Check for castling (king moves 2 squares horizontally)
+            if (oldX == newX && Math.abs(newY - oldY) == 2) {
+                if (isValidCastling(true, oldX, oldY, newX, newY)) {
+                    isWhiteTurn = false;
+                    return true;
+                }
+            }
+            // Regular king move (1 square in any direction)
             if (Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1) {
                 // For king moves, also check if destination is under attack
                 if (!isSquareUnderAttack(newX, newY, true) && !wouldMovePutKingInCheck(piece, newX, newY, oldX, oldY)) {
@@ -349,6 +557,14 @@ public class BoardOperation {
                 }
             }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KING) && !captureableBlackPieces.contains(board[newX][newY].getText())) {
+            // Check for castling (king moves 2 squares horizontally)
+            if (oldX == newX && Math.abs(newY - oldY) == 2) {
+                if (isValidCastling(false, oldX, oldY, newX, newY)) {
+                    isWhiteTurn = true;
+                    return true;
+                }
+            }
+            // Regular king move (1 square in any direction)
             if (Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1) {
                 // For king moves, also check if destination is under attack
                 if (!isSquareUnderAttack(newX, newY, false) && !wouldMovePutKingInCheck(piece, newX, newY, oldX, oldY)) {
