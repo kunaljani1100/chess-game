@@ -94,6 +94,24 @@ public class BoardOperation {
             return newX == oldX || newY == oldY;
         } else if (piece.equals(Constants.BLACK_ROOK)) {
             return newX == oldX || newY == oldY;
+        } else if (piece.equals(Constants.WHITE_BISHOP)) {
+            return Math.abs(newX - oldX) == Math.abs(newY - oldY);
+        } else if (piece.equals(Constants.BLACK_BISHOP)) {
+            return Math.abs(newX - oldX) == Math.abs(newY - oldY);
+        } else if (piece.equals(Constants.WHITE_QUEEN)) {
+            return newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY);
+        } else if (piece.equals(Constants.BLACK_QUEEN)) {
+            return newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY);
+        } else if (piece.equals(Constants.WHITE_KING)) {
+            return Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1;
+        } else if (piece.equals(Constants.BLACK_KING)) {
+            return Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1;
+        } else if (piece.equals(Constants.WHITE_KNIGHT)) {
+            return (Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
+                   (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2);
+        } else if (piece.equals(Constants.BLACK_KNIGHT)) {
+            return (Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
+                   (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2);
         }
         return true;
     }
