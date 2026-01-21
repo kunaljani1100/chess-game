@@ -80,52 +80,92 @@ public class BoardOperation {
         }
     }
 
+    /**
+     * Checks if the path between two squares is clear (no pieces blocking the path).
+     * This prevents pieces from jumping over other pieces.
+     * @param oldX Starting row position
+     * @param oldY Starting column position
+     * @param newX Destination row position
+     * @param newY Destination column position
+     * @return true if the path is clear, false if there are pieces blocking
+     */
+    private static boolean isPathClear(int oldX, int oldY, int newX, int newY) {
+        // Calculate direction of movement
+        int deltaX = Integer.compare(newX, oldX);
+        int deltaY = Integer.compare(newY, oldY);
+        
+        // Start checking from the square next to the source (not including source or destination)
+        int currentX = oldX + deltaX;
+        int currentY = oldY + deltaY;
+        
+        // Check each square along the path until we reach the destination
+        while (currentX != newX || currentY != newY) {
+            // If we find a piece on any intermediate square, the path is blocked
+            if (!board[currentX][currentY].getText().isEmpty()) {
+                return false;
+            }
+            currentX += deltaX;
+            currentY += deltaY;
+        }
+        
+        // Path is clear
+        return true;
+    }
+
     public static boolean isLegalMove(String piece, int newX, int newY, int oldX, int oldY) {
         if (isWhiteTurn && piece.equals(Constants.WHITE_PAWN)) {
             if (newX == oldX - 2 && newY == oldY && oldX == 6) {
-                isWhiteTurn = false;
-                return true;
+                if (isPathClear(oldX, oldY, newX, newY)) {
+                    isWhiteTurn = false;
+                    return true;
+                }
             }
             if (newX == oldX - 1 && newY == oldY) {
+                // Single square move doesn't need path check, but check destination
                 isWhiteTurn = false;
                 return true;
             }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_PAWN)) {
             if (newX == oldX + 2 && newY == oldY && oldX == 1) {
-                isWhiteTurn = true;
-                return true;
+                if (isPathClear(oldX, oldY, newX, newY)) {
+                    isWhiteTurn = true;
+                    return true;
+                }
             }
             if (newX == oldX + 1 && newY == oldY) {
+                // Single square move doesn't need path check, but check destination
                 isWhiteTurn = true;
                 return true;
             }
         } else if (isWhiteTurn && piece.equals(Constants.WHITE_ROOK)) {
-            if (newX == oldX || newY == oldY) {
+            if ((newX == oldX || newY == oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = false;
                 return true;
             }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_ROOK)) {
-            if (newX == oldX || newY == oldY) {
+            if ((newX == oldX || newY == oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = true;
                 return true;
             }
         } else if (isWhiteTurn && piece.equals(Constants.WHITE_BISHOP)) {
-            if (Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+            if (Math.abs(newX - oldX) == Math.abs(newY - oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = false;
                 return true;
             }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_BISHOP)) {
-            if (Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+            if (Math.abs(newX - oldX) == Math.abs(newY - oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = true;
                 return true;
             }
         } else if (isWhiteTurn && piece.equals(Constants.WHITE_QUEEN)) {
-            if (newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+            if ((newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) 
+                    && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = false;
                 return true;
             }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_QUEEN)) {
-            if (newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+            if ((newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) 
+                    && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = true;
                 return true;
             }
