@@ -124,13 +124,13 @@ public class BoardOperation {
 
     public static boolean isLegalMove(String piece, int newX, int newY, int oldX, int oldY) {
         if (isWhiteTurn && piece.equals(Constants.WHITE_PAWN)) {
-            if (newX == oldX - 2 && newY == oldY && oldX == 6) {
+            if (newX == oldX - 2 && newY == oldY && oldX == 6 && board[newX][newY].getText().isEmpty()) {
                 if (isPathClear(oldX, oldY, newX, newY)) {
                     isWhiteTurn = false;
                     return true;
                 }
             }
-            if (newX == oldX - 1 && newY == oldY) {
+            if (newX == oldX - 1 && newY == oldY && board[newX][newY].getText().isEmpty()) {
                 // Single square move doesn't need path check, but check destination
                 isWhiteTurn = false;
                 return true;
@@ -141,13 +141,13 @@ public class BoardOperation {
                 return true;
             }
         } else if (!isWhiteTurn && piece.equals(Constants.BLACK_PAWN)) {
-            if (newX == oldX + 2 && newY == oldY && oldX == 1) {
+            if (newX == oldX + 2 && newY == oldY && oldX == 1 && board[newX][newY].getText().isEmpty()) {
                 if (isPathClear(oldX, oldY, newX, newY)) {
                     isWhiteTurn = true;
                     return true;
                 }
             }
-            if (newX == oldX + 1 && newY == oldY) {
+            if (newX == oldX + 1 && newY == oldY && board[newX][newY].getText().isEmpty()) {
                 // Single square move doesn't need path check, but check destination
                 isWhiteTurn = true;
                 return true;
