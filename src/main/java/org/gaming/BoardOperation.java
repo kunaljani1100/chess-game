@@ -91,13 +91,9 @@ public class BoardOperation {
             }
             return newX == oldX + 1 && newY == oldY;
         } else if (piece.equals(Constants.WHITE_ROOK)) {
-            if (newX != oldX && newY != oldY) {
-                return false;
-            }
+            return newX == oldX || newY == oldY;
         } else if (piece.equals(Constants.BLACK_ROOK)) {
-            if (newX != oldX && newY != oldY) {
-                return false;
-            }
+            return newX == oldX || newY == oldY;
         }
         return true;
     }
