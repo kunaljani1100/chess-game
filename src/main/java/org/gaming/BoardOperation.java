@@ -8,6 +8,7 @@ public class BoardOperation {
     private static boolean pieceClicked = false;
     private static String selectedPiece = Constants.EMPTY_STRING;
     private static JButton [][] board = new JButton[Constants.ROWS][Constants.COLS];
+    private static boolean isWhiteTurn = true;
 
     /**
      * Function to set up the squares of the chess board.
@@ -80,40 +81,78 @@ public class BoardOperation {
     }
 
     public static boolean isLegalMove(String piece, int newX, int newY, int oldX, int oldY) {
-        if (piece.equals(Constants.WHITE_PAWN)) {
+        if (isWhiteTurn && piece.equals(Constants.WHITE_PAWN)) {
             if (newX == oldX - 2 && newY == oldY && oldX == 6) {
+                isWhiteTurn = false;
                 return true;
             }
-            return newX == oldX - 1 && newY == oldY;
-        } else if (piece.equals(Constants.BLACK_PAWN)) {
+            if (newX == oldX - 1 && newY == oldY) {
+                isWhiteTurn = false;
+                return true;
+            }
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_PAWN)) {
             if (newX == oldX + 2 && newY == oldY && oldX == 1) {
+                isWhiteTurn = true;
                 return true;
             }
-            return newX == oldX + 1 && newY == oldY;
-        } else if (piece.equals(Constants.WHITE_ROOK)) {
-            return newX == oldX || newY == oldY;
-        } else if (piece.equals(Constants.BLACK_ROOK)) {
-            return newX == oldX || newY == oldY;
-        } else if (piece.equals(Constants.WHITE_BISHOP)) {
-            return Math.abs(newX - oldX) == Math.abs(newY - oldY);
-        } else if (piece.equals(Constants.BLACK_BISHOP)) {
-            return Math.abs(newX - oldX) == Math.abs(newY - oldY);
-        } else if (piece.equals(Constants.WHITE_QUEEN)) {
-            return newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY);
-        } else if (piece.equals(Constants.BLACK_QUEEN)) {
-            return newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY);
-        } else if (piece.equals(Constants.WHITE_KING)) {
-            return Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1;
-        } else if (piece.equals(Constants.BLACK_KING)) {
-            return Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1;
-        } else if (piece.equals(Constants.WHITE_KNIGHT)) {
-            return (Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
-                   (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2);
-        } else if (piece.equals(Constants.BLACK_KNIGHT)) {
-            return (Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
-                   (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2);
+            if (newX == oldX + 1 && newY == oldY) {
+                isWhiteTurn = true;
+                return true;
+            }
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_ROOK)) {
+            if (newX == oldX || newY == oldY) {
+                isWhiteTurn = false;
+                return true;
+            }
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_ROOK)) {
+            if (newX == oldX || newY == oldY) {
+                isWhiteTurn = true;
+                return true;
+            }
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_BISHOP)) {
+            if (Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+                isWhiteTurn = false;
+                return true;
+            }
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_BISHOP)) {
+            if (Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+                isWhiteTurn = true;
+                return true;
+            }
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_QUEEN)) {
+            if (newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+                isWhiteTurn = false;
+                return true;
+            }
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_QUEEN)) {
+            if (newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) {
+                isWhiteTurn = true;
+                return true;
+            }
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_KING)) {
+            if (Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1) {
+                isWhiteTurn = false;
+                return true;
+            }
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KING)) {
+            if (Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1) {
+                isWhiteTurn = true;
+                return true;
+            }
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_KNIGHT)) {
+            if ((Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
+                   (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2)) {
+                isWhiteTurn = false;
+                return true;
+            }
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KNIGHT)) {
+            if ((Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
+                   (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2)) {
+                isWhiteTurn = true;
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
     /**
