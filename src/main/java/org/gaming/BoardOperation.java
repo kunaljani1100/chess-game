@@ -80,44 +80,44 @@ public class BoardOperation {
      * Function to add chess pieces to the board.
      */
     public static void addPieces() {
-        board[0][0].setText("\u265C");
+        board[0][0].setText(Constants.BLACK_ROOK);
         board[0][0].setFont(Constants.PIECE_FONT);
-        board[0][1].setText("\u265E");
+        board[0][1].setText(Constants.BLACK_KNIGHT);
         board[0][1].setFont(Constants.PIECE_FONT);
-        board[0][2].setText("\u265D");
+        board[0][2].setText(Constants.BLACK_BISHOP);
         board[0][2].setFont(Constants.PIECE_FONT);
-        board[0][3].setText("\u265B");
+        board[0][3].setText(Constants.BLACK_QUEEN);
         board[0][3].setFont(Constants.PIECE_FONT);
-        board[0][4].setText("\u265A");
+        board[0][4].setText(Constants.BLACK_KING);
         board[0][4].setFont(Constants.PIECE_FONT);
-        board[0][5].setText("\u265D");
+        board[0][5].setText(Constants.BLACK_BISHOP);
         board[0][5].setFont(Constants.PIECE_FONT);
-        board[0][6].setText("\u265E");
+        board[0][6].setText(Constants.BLACK_KNIGHT);
         board[0][6].setFont(Constants.PIECE_FONT);
-        board[0][7].setText("\u265C");
+        board[0][7].setText(Constants.BLACK_ROOK);
         board[0][7].setFont(Constants.PIECE_FONT);
         for (int j = 0; j < Constants.COLS; j++) {
-            board[1][j].setText("\u265F");
+            board[1][j].setText(Constants.BLACK_PAWN);
             board[1][j].setFont(Constants.PIECE_FONT);
         }
-        board[7][0].setText("\u2656");
+        board[7][0].setText(Constants.WHITE_ROOK);
         board[7][0].setFont(Constants.PIECE_FONT);
-        board[7][1].setText("\u2658");
+        board[7][1].setText(Constants.WHITE_KNIGHT);
         board[7][1].setFont(Constants.PIECE_FONT);
-        board[7][2].setText("\u2657");
+        board[7][2].setText(Constants.WHITE_BISHOP);
         board[7][2].setFont(Constants.PIECE_FONT);
-        board[7][3].setText("\u2655");
+        board[7][3].setText(Constants.WHITE_QUEEN);
         board[7][3].setFont(Constants.PIECE_FONT);
-        board[7][4].setText("\u2654");
+        board[7][4].setText(Constants.WHITE_KING);
         board[7][4].setFont(Constants.PIECE_FONT);
-        board[7][5].setText("\u2657");
+        board[7][5].setText(Constants.WHITE_BISHOP);
         board[7][5].setFont(Constants.PIECE_FONT);
-        board[7][6].setText("\u2658");
+        board[7][6].setText(Constants.WHITE_KNIGHT);
         board[7][6].setFont(Constants.PIECE_FONT);
-        board[7][7].setText("\u2656");
+        board[7][7].setText(Constants.WHITE_ROOK);
         board[7][7].setFont(Constants.PIECE_FONT);
         for (int j = 0; j < Constants.COLS; j++) {
-            board[6][j].setText("\u2659");
+            board[6][j].setText(Constants.WHITE_PAWN);
             board[6][j].setFont(Constants.PIECE_FONT);
         }
     }
