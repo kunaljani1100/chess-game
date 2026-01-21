@@ -158,54 +158,54 @@ public class BoardOperation {
                 return true;
             }
         } else if (isWhiteTurn && piece.equals(Constants.WHITE_ROOK)) {
-            if ((newX == oldX || newY == oldY) && isPathClear(oldX, oldY, newX, newY)) {
+            if ((newX == oldX || newY == oldY) && isPathClear(oldX, oldY, newX, newY) && !captureableWhitePieces.contains(board[newX][newY].getText())) {
                 isWhiteTurn = false;
                 return true;
             }
-        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_ROOK)) {
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_ROOK) && !captureableBlackPieces.contains(board[newX][newY].getText())) {
             if ((newX == oldX || newY == oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = true;
                 return true;
             }
-        } else if (isWhiteTurn && piece.equals(Constants.WHITE_BISHOP)) {
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_BISHOP) && !captureableWhitePieces.contains(board[newX][newY].getText())) {
             if (Math.abs(newX - oldX) == Math.abs(newY - oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = false;
                 return true;
             }
-        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_BISHOP)) {
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_BISHOP) && !captureableBlackPieces.contains(board[newX][newY].getText())) {
             if (Math.abs(newX - oldX) == Math.abs(newY - oldY) && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = true;
                 return true;
             }
-        } else if (isWhiteTurn && piece.equals(Constants.WHITE_QUEEN)) {
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_QUEEN) && !captureableWhitePieces.contains(board[newX][newY].getText())) {
             if ((newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) 
                     && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = false;
                 return true;
             }
-        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_QUEEN)) {
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_QUEEN) && !captureableBlackPieces.contains(board[newX][newY].getText())) {
             if ((newX == oldX || newY == oldY || Math.abs(newX - oldX) == Math.abs(newY - oldY)) 
                     && isPathClear(oldX, oldY, newX, newY)) {
                 isWhiteTurn = true;
                 return true;
             }
-        } else if (isWhiteTurn && piece.equals(Constants.WHITE_KING)) {
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_KING) && !captureableWhitePieces.contains(board[newX][newY].getText())) {
             if (Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1) {
                 isWhiteTurn = false;
                 return true;
             }
-        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KING)) {
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KING) && !captureableBlackPieces.contains(board[newX][newY].getText())) {
             if (Math.abs(newX - oldX) <= 1 && Math.abs(newY - oldY) <= 1) {
                 isWhiteTurn = true;
                 return true;
             }
-        } else if (isWhiteTurn && piece.equals(Constants.WHITE_KNIGHT)) {
+        } else if (isWhiteTurn && piece.equals(Constants.WHITE_KNIGHT) && !captureableWhitePieces.contains(board[newX][newY].getText())) {
             if ((Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
                    (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2)) {
                 isWhiteTurn = false;
                 return true;
             }
-        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KNIGHT)) {
+        } else if (!isWhiteTurn && piece.equals(Constants.BLACK_KNIGHT) && !captureableBlackPieces.contains(board[newX][newY].getText())) {
             if ((Math.abs(newX - oldX) == 2 && Math.abs(newY - oldY) == 1) ||
                    (Math.abs(newX - oldX) == 1 && Math.abs(newY - oldY) == 2)) {
                 isWhiteTurn = true;
