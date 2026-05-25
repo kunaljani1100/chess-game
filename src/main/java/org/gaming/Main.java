@@ -3,13 +3,18 @@ package org.gaming;
 import javax.swing.*;
 
 public class Main {
+
     public static void main(String[] args) {
-        JFrame jFrame = new JFrame("Chess");
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setLayout(null);
-        jFrame.setSize(800, 800);
-        BoardOperation.setUpBoard(jFrame);
-        BoardOperation.addPieces();
-        jFrame.setVisible(true);
+        JFrame frame = new JFrame("Chess");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        frame.setSize(Constants.WINDOW_SIZE, Constants.WINDOW_SIZE);
+
+        GameState gameState = new GameState();
+        BoardUI boardUI = new BoardUI(gameState);
+        boardUI.setUpBoard(frame);
+        boardUI.initializePieces();
+
+        frame.setVisible(true);
     }
 }

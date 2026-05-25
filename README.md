@@ -1,6 +1,6 @@
 # Chess Game
 
-Am implementation of the game of chess has been done using java. Please use this software tool and try to play a game of chess with your friends and see who wons this game.
+An implementation of the game of chess has been done using Java. Please use this software tool and try to play a game of chess with your friends and see who wins this game.
 
 ## Steps to play this game.
 
@@ -10,3 +10,18 @@ Am implementation of the game of chess has been done using java. Please use this
 4. Click on the desired square you want your piece to move. If the move is a valid move, the piece will move to the new square.
 5. Once white is done moving, it will be black's turn and black will make a move accordingly.
 6. Keep playing till someone wins or loses.
+
+## Building and Running
+
+**Prerequisites:** Java 17+ and Gradle (or use the included Gradle wrapper).
+
+```bash
+# Build the project
+./gradlew build
+
+# Run the game
+./gradlew run
+
+# Run the tests
+./gradlew test
+```
