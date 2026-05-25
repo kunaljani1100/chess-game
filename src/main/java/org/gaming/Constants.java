@@ -13,8 +13,14 @@ public final class Constants {
     public static final int BOARD_OFFSET = 20;
     public static final int WINDOW_SIZE = 800;
     public static final int PIECE_SIZE = 60;
+    public static final int TURN_LABEL_Y = BOARD_OFFSET + ROWS * SQUARE_SIZE + 10;
+    public static final int TURN_LABEL_HEIGHT = 30;
+    public static final int TURN_LABEL_FONT_SIZE = 20;
     public static final Font PIECE_FONT = new Font("Serif", Font.PLAIN, PIECE_SIZE);
+    public static final Font TURN_LABEL_FONT = new Font("SansSerif", Font.BOLD, TURN_LABEL_FONT_SIZE);
     public static final String EMPTY_STRING = "";
+    public static final String WHITE_TO_MOVE = "White to move";
+    public static final String BLACK_TO_MOVE = "Black to move";
 
     public static final String WHITE_PAWN = "\u2659";
     public static final String BLACK_PAWN = "\u265F";

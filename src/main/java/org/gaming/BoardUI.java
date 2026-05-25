@@ -7,6 +7,7 @@ public class BoardUI {
 
     private final JButton[][] buttons;
     private final GameState gameState;
+    private JLabel turnLabel;
 
     public BoardUI(GameState gameState) {
         this.gameState = gameState;
@@ -24,6 +25,8 @@ public class BoardUI {
                 frame.add(button);
             }
         }
+        turnLabel = createTurnLabel();
+        frame.add(turnLabel);
     }
 
     /**
@@ -32,6 +35,7 @@ public class BoardUI {
     public void initializePieces() {
         gameState.initializeBoard();
         syncAllSquares();
+        updateTurnLabel();
     }
 
     private JButton createSquareButton(int row, int col) {
@@ -87,6 +91,7 @@ public class BoardUI {
             syncSquare(srcRow, srcCol);
             gameState.clearSelection();
             gameState.flipTurn();
+            updateTurnLabel();
         }
     }
 
@@ -124,6 +129,24 @@ public class BoardUI {
             for (int col = 0; col < Constants.COLS; col++) {
                 syncSquare(row, col);
             }
+        }
+    }
+
+    private JLabel createTurnLabel() {
+        JLabel label = new JLabel();
+        label.setFont(Constants.TURN_LABEL_FONT);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        int boardWidth = Constants.COLS * Constants.SQUARE_SIZE;
+        label.setBounds(Constants.BOARD_OFFSET, Constants.TURN_LABEL_Y,
+                boardWidth, Constants.TURN_LABEL_HEIGHT);
+        return label;
+    }
+
+    private void updateTurnLabel() {
+        if (gameState.isWhiteTurn()) {
+            turnLabel.setText(Constants.WHITE_TO_MOVE);
+        } else {
+            turnLabel.setText(Constants.BLACK_TO_MOVE);
         }
     }
 
